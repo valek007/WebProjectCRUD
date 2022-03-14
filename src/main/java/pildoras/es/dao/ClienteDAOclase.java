@@ -40,24 +40,40 @@ public class ClienteDAOclase implements ClienteDAO {
 
 		// Obtener la session
 		Session session = sessionFactory.getCurrentSession();
-		
+
 		// Insertar el cliente
 		session.saveOrUpdate(cliente);
 	}
-	
+
 	@Override
 	@Transactional
 	public Cliente getCliente(int id) {
 
 		// Obtener la session
 		Session session = sessionFactory.getCurrentSession();
-		
-		//Obtener la información del cliente seleccionado
-		
+
+		// Obtener la información del cliente seleccionado
+
 		Cliente cliente = session.get(Cliente.class, id);
-		
+
 		return cliente;
+
+	}
+
+	@Override
+	@Transactional
+	public void eliminarCliente(int id) {
+
+		// Obtener la session
+		Session session = sessionFactory.getCurrentSession();
 		
+		// Borrar el cliente de la BBDD utilizando el id
+		
+		Query<?> consulta=session.createQuery("delete from Cliente where id=:IdDelCLIente");
+		
+		// Establecer el parametro
+		consulta.setParameter("IdDelCLIente", id);
+		consulta.executeUpdate();
 	}
 
 }
